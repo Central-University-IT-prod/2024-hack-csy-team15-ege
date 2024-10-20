@@ -1,0 +1,61 @@
+let user;
+
+// Функция для загрузки данных пользователя из JSON
+function loadUserData() {
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            user = data.user;
+            displayUserData();
+        })
+        .catch(error => console.error('Ошибка загрузки данных:', error));
+}
+
+// Функция для отображения данных пользователя
+function displayUserData() {
+    document.getElementById('progressBar').style.width = user.progress + '%';
+    document.getElementById('progressText').innerText = user.progress + '% завершено';
+    document.getElementById('studyTimeInput').value = user.studyTime;
+    document.getElementById('nextTaskText').innerText = 'Ваше следующее задание: ' + user.nextTask;
+
+    const achievementsList = document.getElementById('achievementsList');
+    achievementsList.innerHTML = '';
+    user.achievements.forEach(achievement => {
+        const li = document.createElement('li');
+        li.innerText = `${achievement.name} - ${achievement.description}`;
+        achievementsList.appendChild(li);
+    });
+}
+
+// Функция для выбора класса
+function selectClass(studyClass) {
+    switch (studyClass) {
+        case 'ege_11':
+            user.nextTask = "Подготовка к ЕГЭ по русскому языку";
+            break;
+        case 'ege_10':
+            user.nextTask = "Подготовка к ЕГЭ по математике";
+            break;
+        case 'oge_9':
+            user.nextTask = "Подготовка к ОГЭ по биологии";
+            break;
+        default:
+            user.nextTask = "Тест по математике";
+    }
+    displayUserData();
+}
+
+// Функция для обновления расписания
+function updateSchedule() {
+    const studyTime = document.getElementById('studyTimeInput').value;
+    user.studyTime = studyTime;  // Обновляем время занятий
+    displayUserData();  // Обновляем отображение
+}
+
+// Функция для начала задания
+function startTask() {
+    alert('Начинаем следующее задание!');
+}
+
+// Инициализация данных при загрузке страницы
+window.onload = loadUserData;

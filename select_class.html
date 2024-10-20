@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор класса</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-color: #f8f9fa; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        header { 
+            background-color: #fff; 
+            padding: 20px; 
+            border-radius: 10px; 
+            text-align: center; 
+            margin-bottom: 20px; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 { 
+            font-size: 36px; 
+            color: #333; 
+        }
+        .class-selection { 
+            display: flex; 
+            justify-content: center; 
+            gap: 30px; 
+            flex-wrap: wrap; 
+        }
+        .class-card {
+            width: 150px; /* Ширина карточки */
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .class-card img {
+            width: 100%; /* Полная ширина карточки */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .class-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Выберите класс</h1>
+    </header>
+
+    <div class="class-selection">
+        <div class="class-card" onclick="selectClass('11')">
+            <img src="images/11.svg" alt="11 класс">
+        </div>
+        <div class="class-card" onclick="selectClass('10')">
+            <img src="images/10.svg" alt="10 класс">
+        </div>
+        <div class="class-card" onclick="selectClass('9')">
+            <img src="images/9.svg" alt="9 класс">
+        </div>
+    </div>
+</div>
+
+<script>
+    function selectClass(classNumber) {
+        // Сохраняем выбранный класс в localStorage
+        localStorage.setItem('selectedClass', classNumber);
+        // Переход на страницу выбора предметов
+        window.location.href = 'select_subject.html';
+    }
+</script>
+</body>
+</html>

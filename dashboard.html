@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            background-color: #f8f9fa; 
+            display: flex; 
+            margin: 0;
+            flex-wrap: wrap; /* Позволяет панелям занимать несколько строк */
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #FFC107; /* Жёлтый цвет */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            height: 100vh;
+            position: fixed; /* Фиксируем панель слева */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Легкая тень для эффекта */
+        }
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #e0a800; /* Тёмно-жёлтый для эффекта наведения */
+        }
+        .container {
+            margin-left: 270px; /* Учитываем ширину боковой панели */
+            margin-right: 270px; /* Учитываем ширину правой панели */
+            padding: 20px;
+            max-width: 1200px;
+            margin-top: 40px; /* Увеличиваем отступ сверху для большего расстояния */
+        }
+        header { 
+            background-color: #fff; 
+            padding: 20px; 
+            border-radius: 10px; 
+            text-align: center; 
+            margin-bottom: 20px; 
+        }
+        h1 { font-size: 36px; color: #333; }
+        .panel { 
+            background-color: #e9ecef; 
+            padding: 20px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+        }
+        .panel h2 { margin: 0; }
+        .course-info { 
+            margin-top: 20px; 
+            font-size: 18px; 
+            color: #555; 
+        }
+        .course-info img {
+            width: 20px; /* Ширина изображения */
+            height: 20px; /* Высота изображения */
+            vertical-align: middle; /* Выравнивание по центру текста */
+            margin-right: 10px; /* Отступ между изображением и текстом */
+        }
+        .start-button { 
+            background-color: #28a745; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 5px; 
+        }
+        .start-button:hover { 
+            background-color: #218838; 
+        }
+        .account-sidebar {
+            width: 250px;
+            background-color: #fff; /* Белый фон */
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            position: fixed; /* Фиксируем панель справа */
+            right: 20px;
+            top: 20px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
+        }
+        .account-sidebar img {
+            width: 50px; /* Размер аватарки */
+            height: 50px; /* Размер аватарки */
+            border-radius: 50%; /* Круглая форма */
+            margin-bottom: 10px;
+        }
+        .activity-days {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .day {
+            width: 30px; /* Ширина для каждого дня */
+            height: 30px; /* Высота для каждого дня */
+            border-radius: 50%; /* Круглая форма */
+            background-color: gray; /* Серый цвет по умолчанию */
+            position: relative;
+        }        
+        .day.passed {
+            background-color: green; /* Зеленый цвет для прошедшего дня */
+        }
+        .day-number {
+            position: absolute;
+            top: 5px; /* Положение по вертикали */
+            left: 10px; /* Положение по горизонтали */
+            color: white; /* Цвет текста */
+            font-size: 14px; /* Размер текста */
+        }
+        
+        /* Адаптивные стили для мобильных устройств */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative; /* Изменяем позиционирование на относительное */
+                width: 100%; /* Ширина на весь экран */
+                height: auto; /* Высота автоматическая */
+                box-shadow: none; /* Убираем тень */
+            }
+            .account-sidebar {
+                position: relative; /* Изменяем позиционирование на относительное */
+                width: 100%; /* Ширина на весь экран */
+                margin-top: 20px; /* Отступ сверху */
+            }
+            .container {
+                margin-left: 0; /* Убираем левый отступ */
+                margin-right: 0; /* Убираем правый отступ */
+                padding: 10px; /* Уменьшаем отступы */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Меню</h2>
+        <a href="#">Ачивки</a>
+        <a href="#">Ежедневные задания</a>
+        <a href="#">Статистика</a>
+        <a href="#">Профиль</a>
+        <a href="https://t.me/jacoblovo" target="_blank">Связь с Куратором</a>
+        <a href="#">Выход</a>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 id="courses-header">Ваши курсы по подготовке</h1>
+        </header>
+
+        <section class="panel">
+            <h2 id="course-title"></h2> <!-- Заголовок курса -->
+            <div class="course-info" id="course-info">
+                <p>
+                    <img src="images/1.png" alt="Иконка"> Пройди урок до 23:59
+                </p>
+                <p>
+                    <img src="images/2.png" alt="Иконка"> Время выполнения - 30 минут
+                </p>
+                <p>
+                    <img src="images/3.png" alt="Иконка"> Связь с куратором
+                </p>
+            </div>
+            <button class="start-button" id="start-learning">Начать обучение</button>
+        </section>
+    </div>
+
+    <div class="account-sidebar">
+        <img src="images/4.png" alt="Аватарка">
+        <h3>Иван Дмитриев</h3>
+        <h4>Ежедневные заходы</h4> <!-- Добавленный заголовок -->
+        <div class="activity-days">
+            <div class="day passed">
+                <div class="day-number">1</div>
+            </div>
+            <div class="day">
+                <div class="day-number">2</div>
+            </div>
+            <div class="day">
+                <div class="day-number">3</div>
+            </div>
+            <div class="day">
+                <div class="day-number">4</div>
+            </div>
+            <div class="day">
+                <div class="day-number">5</div>
+            </div>
+            <div class="day">
+                <div class="day-number">6</div>
+            </div>
+            <div class="day">
+                <div class="day-number">7</div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        // Получаем данные из localStorage
+        const selectedClass = localStorage.getItem('selectedClass');
+        const selectedSubject = localStorage.getItem('selectedSubject'); // Предмет
+
+        // Изменяем заголовок в зависимости от выбранного класса и создаем название курса
+        const coursesHeader = document.getElementById('courses-header');
+        const courseTitle = document.getElementById('course-title');
+        const courseInfo = document.getElementById('course-info');
+
+        let courseName = '';
+        if (selectedClass === 'ege_11' && selectedSubject === 'info') {
+            courseName = 'ЕГЭ по Информатике';
+            coursesHeader.innerText = 'Ваши курсы по подготовке к ЕГЭ';
+        } else if (selectedClass === 'ege_10' && selectedSubject === 'info') {
+            courseName = 'ЕГЭ по Информатике';
+            coursesHeader.innerText = 'Ваши курсы по подготовке к ЕГЭ';
+        } else if (selectedClass === 'oge_9' && selectedSubject === 'info') {
+            courseName = 'ОГЭ по Информатике';
+            coursesHeader.innerText = 'Ваши курсы по подготовке к ОГЭ';
+        }
+
+        // Отображаем название курса и дополнительную информацию
+        courseTitle.innerText = courseName;
+
+        // Обработчик события для кнопки "Начать обучение"
+        document.getElementById('start-learning').addEventListener('click', function() {
+            // Переход на страницу решения задач
+            window.open('task_solving.html', '_blank'); // Открытие нового окна с задачами
+        });
+    </script>
+</body>
+</html>
